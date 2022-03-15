@@ -69,7 +69,7 @@ def input_marks(course_list, student_list):
         # student_id = student_list[i]['ID']
         student_name = student_list[i]['Name']
         while True:
-            marks = int(input('\nEnter marks of {} for student {} (1, 20): '.format(course_name, student_name)))
+            marks = float(input('\nEnter marks of {} for student {} (0, 20): '.format(course_name, student_name)))
             if marks >= 0 and marks <= 20:
                 print('{} marks for {} in {} is {}'.format(student_name, course_name, course_id, marks))
                 student_list[i].update({course_name: marks})
@@ -95,6 +95,7 @@ while True:
     elif opt == '4':
         while True:
             course_id = (input('\n----------------------------------------\n\nEnter course ID to show students marks: '))
+            print('')
             if course_id in [x['ID'] for x in course_list]:
                 course_name = [x['Name'] for x in course_list if x['ID'] == course_id][0]
                 break
