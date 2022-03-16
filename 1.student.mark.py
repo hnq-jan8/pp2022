@@ -76,7 +76,6 @@ def input_marks(course_list, student_list):
     print('\n-----  Enter marks for students:  -----')
     course_name = select_course(course_list)
     for i in range(0, len(student_list), 1):
-        # student_id = student_list[i]['ID']
         student_name = student_list[i]['Name']
         while True:
             marks = float(input('\nEnter marks of {} for student {} (1, 20): '.format(course_name, student_name)))
@@ -90,6 +89,7 @@ def input_marks(course_list, student_list):
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
     course_name = select_course(course_list)
+    print('')
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
         if course_name in student_list[i]:
