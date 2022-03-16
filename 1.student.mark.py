@@ -71,8 +71,6 @@ def select_course(course_list):
             print('Invalid course ID!')
     return course_name
 
-
-
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
