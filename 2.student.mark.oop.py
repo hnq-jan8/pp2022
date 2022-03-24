@@ -102,6 +102,7 @@ def input_course_info(n):
 
         course = Course(id, name)
         course_list.append(course)
+    return course_list
 
 def display_list(list):
     # Show the list of students
@@ -125,10 +126,12 @@ while True:
         \rYour choice: ''')
 
     if opt == '1':      # List courses
-        print('\n----------------------------------------\n\n\tCourses list:')
+        print('''\n----------------------------------------
+                \r\n\tCourses list:''')
         display_list(courses)
     elif opt == '2':    # List students
-        print('\n----------------------------------------\n\n\tStudents list:')
+        print('''\n----------------------------------------
+                \r\n\Students list:''')
         display_list(students)
     elif opt == '3':    # Input course marks
         # input_marks(course_list, student_list)
