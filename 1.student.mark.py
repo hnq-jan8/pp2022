@@ -18,7 +18,7 @@ def input_student_number():
     # Input number of students in a class
     while True:
         n = (input('\nEnter number of students: '))
-        if n.isdigit():
+        if n.isdigit():   # Check if input is a natural number
             n = int(n)
             if n > 0:
                 break
@@ -30,7 +30,7 @@ def input_course_number():
     # Input number of courses
     while True:
         n = (input('\nEnter number of courses: '))
-        if n.isdigit():
+        if n.isdigit():   # Check if input is a natural number
             n = int(n)
             if n > 0:
                 break
@@ -45,6 +45,7 @@ def input_student_info(n):
     for i in range(0, n, 1):
         print('\nStudent no {}'.format(i + 1))
         id = input('. Enter student ID: ').upper()
+
         while id in [x['ID'] for x in student_list]:    # Check if ID is not duplicate
             id = (input('  This ID is already taken\n  Enter again student ID: ')).upper()
         name = input('. Enter student name: ')
@@ -62,6 +63,7 @@ def input_course_info(n):
     for i in range(0, n, 1):
         print('\nCourse no {}'.format(i + 1))
         id = input('. Enter course ID: ').lower()
+        
         while id in [x['ID'] for x in courses_list]:    # Check if ID is not duplicate
             id = (input('  This ID is is already taken\n  Enter again course ID: ')).lower()
         name = input('. Enter course name: ')
@@ -75,19 +77,23 @@ def select_course(course_list):
     # Select a course
     while True:
         course_id = (input('\nEnter course ID: ')).lower()
+        
         if course_id in [x['ID'] for x in course_list]:
             course_name = [x['Name'] for x in course_list if x['ID'] == course_id][0]
             break
         else:
             print('Invalid course ID!')
+
     return course_name
 
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
     course_name = select_course(course_list)
+
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
+
         while True:
             marks = input('\nEnter marks of {} for student {} (0, 20): '.format(course_name, student_name))
             try:
@@ -96,11 +102,9 @@ def input_marks(course_list, student_list):
                     print('{} marks for {} is {}'.format(student_name, course_name, marks))
                     student_list[i].update({course_name: marks})
                     break
-                else:
-                    print('Invalid marks!')
+                else: print('Invalid marks!')
             except ValueError:  # If input is not a number
-                print('Invalid marks!')
-
+                print("It's not a number!")
 
 def show_list_courses(course_list):
     # Show the list of courses
