@@ -93,7 +93,6 @@ def input_marks(course_list, student_list):
 
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
-
         while True:
             marks = input('\nEnter marks of {} for student {} (0, 20): '.format(course_name, student_name))
             try:
