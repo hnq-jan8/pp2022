@@ -17,17 +17,25 @@ Functions
 def input_student_number():
     # Input number of students in a class
     while True:
-        n = int(input('\nEnter number of students: '))
-        if n > 0:
-            break
+        n = (input('\nEnter number of students: '))
+        if n.isdigit():
+            n = int(n)
+            if n > 0:
+                break
+            else: print('Invalid number!')
+        else: print('Invalid number!')
     return n
 
 def input_course_number():
     # Input number of courses
     while True:
-        n = int(input('\nEnter number of courses: '))
-        if n > 0:
-            break
+        n = (input('\nEnter number of courses: '))
+        if n.isdigit():
+            n = int(n)
+            if n > 0:
+                break
+            else: print('Invalid number!')
+        else: print('Invalid number!')
     return n
 
 def input_student_info(n):
@@ -81,13 +89,18 @@ def input_marks(course_list, student_list):
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
         while True:
-            marks = float(input('\nEnter marks of {} for student {} (1, 20): '.format(course_name, student_name)))
-            if marks >= 0 and marks <= 20:
-                print('{} marks for {} is {}'.format(student_name, course_name, marks))
-                student_list[i].update({course_name: marks})
-                break
-            else:
+            marks = input('\nEnter marks of {} for student {} (0, 20): '.format(course_name, student_name))
+            try:
+                marks = float(marks)
+                if marks >= 0 and marks <= 20:
+                    print('{} marks for {} is {}'.format(student_name, course_name, marks))
+                    student_list[i].update({course_name: marks})
+                    break
+                else:
+                    print('Invalid marks!')
+            except ValueError:  # If input is not a number
                 print('Invalid marks!')
+
 
 def show_list_courses(course_list):
     # Show the list of courses
@@ -111,25 +124,37 @@ def show_marks(course_list, student_list):
         else:
             print(' {} has not taken {}'.format(student_name, course_name))
 
+def menu():
+    while True:
+        opt = input('''
+            \r----------------------------------------\n
+            \rChoose an option:
+            \r  1. List courses
+            \r  2. List students
+            \r  3. Update course marks
+            \r  4. Show student marks for a given course
+            \r  0. Exit\n
+            \rYour choice: ''')
+
+        if opt == '1':      # List courses
+            print('\n----------------------------------------\n\n\tCourses list:')
+            show_list_courses(course_list)
+        elif opt == '2':    # List students
+            print('\n----------------------------------------\n\n\tStudents list:')
+            show_list_student(student_list)
+        elif opt == '3':    # Input course marks
+            input_marks(course_list, student_list)
+        elif opt == '4':    # Show student marks for a given course
+            show_marks(course_list, student_list)
+        elif opt == '0':    # Exit
+            print('\n----------------- Bye ------------------\n')
+            break
+        else:
+            print('Invalid option!')
+
 studentCount = input_student_number()
 courseCount = input_course_number()
 student_list = input_student_info(studentCount)
 course_list = input_course_info(courseCount)
 
-while True:
-    opt = input('\n----------------------------------------\n\nChoose an option:\n  1. List courses\n  2. List students\n  3. Update course marks\n  4. Show student marks for a given course\n  5. Exit\n\nYour choice: ')
-    if opt == '1':      # List courses
-        print('\n----------------------------------------\n\n\tCourses list:')
-        show_list_courses(course_list)
-    elif opt == '2':    # List students
-        print('\n----------------------------------------\n\n\tStudents list:')
-        show_list_student(student_list)
-    elif opt == '3':    # Input course marks
-        input_marks(course_list, student_list)
-    elif opt == '4':    # Show student marks for a given course
-        show_marks(course_list, student_list)
-    elif opt == '5':    # Exit
-        print('\n----------------- Bye ------------------\n')
-        break
-    else:
-        print('Invalid option!')
+menu()
