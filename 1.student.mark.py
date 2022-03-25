@@ -35,7 +35,7 @@ def input_student_info(n):
         id = input('. Enter student ID: ').upper()
 
         while id in [x['ID'] for x in student_list]:    # Check if ID is not duplicate
-            id = (input('  This ID is already taken\n  Enter again student ID: ')).upper()
+            id = (input('  (!) This ID is already taken\n     Enter again student ID: ')).upper()
         name = input('. Enter student name: ')
         DoB = input('. Enter student DoB: ')
         
@@ -53,7 +53,7 @@ def input_course_info(n):
         id = input('. Enter course ID: ').upper()
         
         while id in [x['ID'] for x in courses_list]:    # Check if ID is not duplicate
-            id = (input('  This ID is is already taken\n  Enter again course ID: ')).upper()
+            id = (input('  (!) This ID is already taken\n     Enter again course ID: ')).upper()
         name = input('. Enter course name: ')
         
         course_info = {'ID': id, 'Name': name}
@@ -97,12 +97,12 @@ def input_marks(course_list, student_list):
 def show_list_courses(course_list):
     # Show the list of courses
     for i in range(0, len(course_list), 1):
-        print('\t. {}   ID: {}'.format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
+        print("\t. {}   ID: '{}'".format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
 
 def show_list_student(student_list):
     # Show the list of students
     for i in range(0, len(student_list), 1):
-        print(f"\t. {student_list[i]['Name']}\n\t    ID: {student_list[i]['ID']}   DoB: {student_list[i]['DoB']}")
+        print(f"\t. {student_list[i]['Name']}\n\t    ID: '{student_list[i]['ID']}'   DoB: {student_list[i]['DoB']}")
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
