@@ -94,15 +94,19 @@ def input_marks(course_list, student_list):
         except ValueError:  # If input is not a number
             print("It's not a number!")
 
+    input('\nPress Enter to continue...')
+
 def show_list_courses(course_list):
     # Show the list of courses
     for i in range(0, len(course_list), 1):
         print("\t. {}   ID: '{}'".format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
+    input('\nPress Enter to continue...')
 
 def show_list_student(student_list):
     # Show the list of students
     for i in range(0, len(student_list), 1):
         print(f"\t. {student_list[i]['Name']}\n\t    ID: '{student_list[i]['ID']}'   DoB: {student_list[i]['DoB']}")
+    input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
@@ -115,6 +119,8 @@ def show_marks(course_list, student_list):
             print(' {} marks for {} is {}'.format(student_name, course_name, marks))
         else:
             print(' {} has not taken {}'.format(student_name, course_name))
+
+    input('\nPress Enter to continue...')
 
 studentCount = input_quantity('students')
 courseCount = input_quantity('courses')
