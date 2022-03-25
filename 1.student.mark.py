@@ -37,10 +37,10 @@ def input_info(str, n):
             id = (input(f'  (!) This ID is already taken\n     Enter again {str} ID: ')).upper()
         name = input(f'. Enter {str} name: ')
         
-        if str == 'student':      # If entering student information
+        if str == 'student':    # If entering student information
             DoB = input('. Enter student DoB: ')
             object = {'ID': id, 'Name': name, 'DoB': DoB}
-        elif str == 'course':
+        elif str == 'course':   # If entering course information
             object = {'ID': id, 'Name': name}
         list.append(object)
     return list
