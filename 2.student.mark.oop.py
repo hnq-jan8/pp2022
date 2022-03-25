@@ -60,10 +60,10 @@ def input_info(str, n):
                 \r     Enter again {str} ID: ''')).upper()
         name = input(f'. Enter {str} name: ')
 
-        if str == 'student':      # If entering student information
+        if str == 'student':    # If entering student information
             DoB = input('. Enter student DoB: ')
             object = Student(id, name, DoB)
-        elif str == 'course':    # If entering course information
+        elif str == 'course':   # If entering course information
             object = Course(id, name)        
         list.append(object)
     return list    
