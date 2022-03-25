@@ -14,22 +14,10 @@ Functions
     • Show student marks for a given course
 '''
 
-def input_student_number():
-    # Input number of students in a class
+def input_quantity(str):
+    # Input number of students
     while True:
-        n = (input('\nEnter number of students: '))
-        if n.isdigit():   # Check if input is a natural number
-            n = int(n)
-            if n > 0:
-                break
-            else: print('Invalid number!')
-        else: print('Invalid number!')
-    return n
-
-def input_course_number():
-    # Input number of courses
-    while True:
-        n = (input('\nEnter number of courses: '))
+        n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():   # Check if input is a natural number
             n = int(n)
             if n > 0:
@@ -62,10 +50,10 @@ def input_course_info(n):
     courses_list = []
     for i in range(0, n, 1):
         print('\nCourse no {}'.format(i + 1))
-        id = input('. Enter course ID: ').lower()
+        id = input('. Enter course ID: ').upper()
         
         while id in [x['ID'] for x in courses_list]:    # Check if ID is not duplicate
-            id = (input('  This ID is is already taken\n  Enter again course ID: ')).lower()
+            id = (input('  This ID is is already taken\n  Enter again course ID: ')).upper()
         name = input('. Enter course name: ')
         
         course_info = {'ID': id, 'Name': name}
@@ -73,51 +61,52 @@ def input_course_info(n):
 
     return courses_list
 
-def select_course(course_list):
-    # Select a course
+def select_element_by_id(list, str):
+    # Select an element by ID
     while True:
-        course_id = (input('\nEnter course ID: ')).lower()
+        element_id = (input(f'\nEnter {str} ID: ')).upper()
         
-        if course_id in [x['ID'] for x in course_list]:
-            course_name = [x['Name'] for x in course_list if x['ID'] == course_id][0]
+        if element_id in [x['ID'] for x in list]:
+            element_name = [x['Name'] for x in list if x['ID'] == element_id][0]
             break
         else:
-            print('Invalid course ID!')
-
-    return course_name
+            print(f'Invalid {str} ID!')
+    return element_name
 
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
-    course_name = select_course(course_list)
+    course_name = select_element_by_id(course_list, 'course')
+    print(f'Selected course: {course_name}')
+    student_name = select_element_by_id(student_list, 'student')
 
-    for i in range(0, len(student_list), 1):
-        student_name = student_list[i]['Name']
-        while True:
-            marks = input('\nEnter marks of {} for student {} (0, 20): '.format(course_name, student_name))
-            try:
-                marks = float(marks)
-                if marks >= 0 and marks <= 20:
-                    print('{} marks for {} is {}'.format(student_name, course_name, marks))
-                    student_list[i].update({course_name: marks})
-                    break
-                else: print('Invalid marks!')
-            except ValueError:  # If input is not a number
-                print("It's not a number!")
+    while True:
+        marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
+        try:
+            marks = float(marks)
+            if marks >= 0 and marks <= 20:
+                print('{} marks for {} is {}'.format(student_name, course_name, marks))
+                for i in range(0, len(student_list), 1):
+                    if student_list[i]['Name'] == student_name:
+                        student_list[i][course_name] = marks
+                break
+            else: print('Invalid marks!')
+        except ValueError:  # If input is not a number
+            print("It's not a number!")
 
 def show_list_courses(course_list):
     # Show the list of courses
     for i in range(0, len(course_list), 1):
-        print('\t. {}   ID: {}'.format(course_list[i]['Name'], course_list[i]['ID']))
+        print('\t. {}   ID: {}'.format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
 
 def show_list_student(student_list):
     # Show the list of students
     for i in range(0, len(student_list), 1):
-        print('\t. {}\n\t     ID: {}   DoB: {}'.format(student_list[i]['Name'], student_list[i]['ID'] , student_list[i]['DoB']))
+        print(f"\t. {student_list[i]['Name']}\n\t    ID: {student_list[i]['ID']}   DoB: {student_list[i]['DoB']}")
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
-    course_name = select_course(course_list)
+    course_name = select_element_by_id(course_list, 'course')
     print('')
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
@@ -127,8 +116,8 @@ def show_marks(course_list, student_list):
         else:
             print(' {} has not taken {}'.format(student_name, course_name))
 
-studentCount = input_student_number()
-courseCount = input_course_number()
+studentCount = input_quantity('students')
+courseCount = input_quantity('courses')
 student_list = input_student_info(studentCount)
 course_list = input_course_info(courseCount)
 
@@ -142,7 +131,7 @@ while True:
         \r  4. Show student marks for a given course
         \r  0. Exit\n
         \rYour choice: ''')
-
+    
     if opt == '1':      # List courses
         print('\n----------------------------------------\n\n\tCourses list:')
         show_list_courses(course_list)
@@ -157,4 +146,4 @@ while True:
         print('\n----------------- Bye ------------------\n')
         break
     else:
-        print('Invalid option!')
+        print(f'There is no option "{opt}"')

@@ -131,7 +131,7 @@ while True:
         display_list(courses)
     elif opt == '2':    # List students
         print('''\n----------------------------------------
-                \r\n\Students list:''')
+                \r\n\tStudents list:''')
         display_list(students)
     elif opt == '3':    # Input course marks
         # input_marks(course_list, student_list)
