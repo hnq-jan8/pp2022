@@ -38,10 +38,10 @@ class Course:
 
 #   Main program
 
-def input_student_number():
+def input_quantity(str):
     # Input number of students
     while True:
-        n = (input('\nEnter number of students: '))
+        n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():   # Check if input is a natural number
             n = int(n)
             if n > 0:
@@ -50,19 +50,7 @@ def input_student_number():
         else: print('Invalid number!')
     return n
 
-def input_course_number():
-    # Input number of courses
-    while True:
-        n = (input('\nEnter number of courses: '))
-        if n.isdigit():   # Check if input is a natural number
-            n = int(n)
-            if n > 0:
-                break
-            else: print('Invalid number!')
-        else: print('Invalid number!')
-    return n
-
-def check_exist_ID(id, list):
+def check_if_exists(id, list):
     # Check if ID already exists
     for i in list:
         if i.get_id() == id:
@@ -77,7 +65,7 @@ def input_student_info(n):
         print('\nStudent no {}'.format(i + 1))
         id = input('. Enter student ID: ').upper()
 
-        while check_exist_ID(id, student_list) == True:
+        while check_if_exists(id, student_list) == True:
             id = (input('''  This ID is already taken
             \r  Enter again student ID: ''')).upper()
         name = input('. Enter student name: ')
@@ -95,7 +83,7 @@ def input_course_info(n):
         print('\nCourse no {}'.format(i + 1))
         id = input('. Enter course ID: ').upper()
 
-        while check_exist_ID(id, course_list) == True:
+        while check_if_exists(id, course_list) == True:
             id = (input('''  This ID is already taken
             \r  Enter again course ID: ''')).upper()
         name = input('. Enter course name: ')
@@ -109,8 +97,8 @@ def display_list(list):
     for i in list:
         i.display_info()
 
-studentCount = input_student_number()
-courseCount = input_course_number()
+studentCount = input_quantity('students')
+courseCount = input_quantity('courses')
 students = input_student_info(studentCount)
 courses = input_course_info(courseCount)
 
