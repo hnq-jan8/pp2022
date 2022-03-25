@@ -48,12 +48,6 @@ def input_quantity(str):
         else: print('Invalid number!')
     return n
 
-def is_exist(id, list):
-    # Check if ID already exists
-    if id in [i.get_id() for i in list]:
-            return True
-    return False
-
 def input_info(str, n):
     # Input student/course information
     print(f'\n-----  Enter {str} information:  -----')
@@ -61,7 +55,7 @@ def input_info(str, n):
     for i in range(0, n, 1):
         print(f'\n{str.capitalize()} no {i + 1}')
         id = input(f'. Enter {str} ID: ').upper()
-        while is_exist(id, list) == True:
+        while id in [i.get_id() for i in list]:
             id = (input(f'''  (!) This ID is already taken
                 \r     Enter again {str} ID: ''')).upper()
         name = input(f'. Enter {str} name: ')
