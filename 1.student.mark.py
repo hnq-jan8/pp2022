@@ -61,8 +61,8 @@ def input_course_info(n):
 
     return courses_list
 
-def select_element_by_id(list, str):
-    # Select an element by ID
+def id_to_name(list, str):
+    # Find name using ID
     while True:
         element_id = (input(f'\nEnter {str} ID: ')).upper()
         
@@ -76,9 +76,9 @@ def select_element_by_id(list, str):
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
-    course_name = select_element_by_id(course_list, 'course')
+    course_name = id_to_name(course_list, 'course')
     print(f'Selected course: {course_name}')
-    student_name = select_element_by_id(student_list, 'student')
+    student_name = id_to_name(student_list, 'student')
 
     while True:
         marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
@@ -106,7 +106,7 @@ def show_list_student(student_list):
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
-    course_name = select_element_by_id(course_list, 'course')
+    course_name = id_to_name(course_list, 'course')
     print('')
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
