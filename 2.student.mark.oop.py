@@ -15,9 +15,6 @@ class Student:
     def get_name(self):
         return self.name
 
-    def get_DoB(self):
-        return self.DoB
-
     def display_info(self):
         print(f"\t. {self.name}\n\t    ID: '{self.id}'   DoB: {self.DoB}")        
 
@@ -144,7 +141,6 @@ while True:
         display_list(students)
     elif opt == '3':    # Input course marks
         input_marks(courses, students, marks)
-        # print('\n', marks)
     elif opt == '4':    # Show student marks for a given course
         show_marks(courses, marks)
     elif opt == '0':    # Exit
