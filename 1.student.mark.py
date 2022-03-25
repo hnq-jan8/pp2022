@@ -26,40 +26,24 @@ def input_quantity(str):
         else: print('Invalid number!')
     return n
 
-def input_student_info(n):
-    # Input student information: id, name, DoB
-    print('\n-----  Enter student information:  -----')
-    student_list = []
+def input_info(str, n):
+    # Input student/course information
+    print(f'\n-----  Enter {str} information:  -----')
+    list = []
     for i in range(0, n, 1):
-        print('\nStudent no {}'.format(i + 1))
-        id = input('. Enter student ID: ').upper()
-
-        while id in [x['ID'] for x in student_list]:    # Check if ID is not duplicate
-            id = (input('  (!) This ID is already taken\n     Enter again student ID: ')).upper()
-        name = input('. Enter student name: ')
-        DoB = input('. Enter student DoB: ')
+        print(f'\n{str.capitalize()} no {i + 1}')
+        id = input(f'. Enter {str} ID: ').upper()
+        while id in [x['ID'] for x in list]:    # Check if ID is not duplicate
+            id = (input(f'  (!) This ID is already taken\n     Enter again {str} ID: ')).upper()
+        name = input(f'. Enter {str} name: ')
         
-        student_info = {'ID': id, 'Name': name, 'DoB': DoB}
-        student_list.append(student_info)
-
-    return student_list
-
-def input_course_info(n):
-    # Input course information: id, name
-    print('\n-----  Enter course information:  -----')
-    courses_list = []
-    for i in range(0, n, 1):
-        print('\nCourse no {}'.format(i + 1))
-        id = input('. Enter course ID: ').upper()
-        
-        while id in [x['ID'] for x in courses_list]:    # Check if ID is not duplicate
-            id = (input('  (!) This ID is already taken\n     Enter again course ID: ')).upper()
-        name = input('. Enter course name: ')
-        
-        course_info = {'ID': id, 'Name': name}
-        courses_list.append(course_info)
-
-    return courses_list
+        if str == 'student':      # If entering student information
+            DoB = input('. Enter student DoB: ')
+            object = {'ID': id, 'Name': name, 'DoB': DoB}
+        elif str == 'course':
+            object = {'ID': id, 'Name': name}
+        list.append(object)
+    return list
 
 def id_to_name(list, str):
     # Find name using ID
@@ -124,8 +108,8 @@ def show_marks(course_list, student_list):
 
 studentCount = input_quantity('students')
 courseCount = input_quantity('courses')
-student_list = input_student_info(studentCount)
-course_list = input_course_info(courseCount)
+student_list = input_info('student', studentCount)
+course_list = input_info('course', courseCount)
 
 while True:
     opt = input('''
