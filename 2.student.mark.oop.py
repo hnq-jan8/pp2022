@@ -2,8 +2,7 @@
 This program has all the same features as the previous one
 but it is an OOP version
 '''
-# Classes: Student, Course
-
+#   Classes: Student, Course
 class Student:
     def __init__(self, id, name, DoB):
         self.id = id
@@ -20,7 +19,7 @@ class Student:
         return self.DoB
 
     def display_info(self):
-        print(f'\t. {self.name}\n\t     ID: {self.id}   DoB: {self.DoB}')
+        print(f"\t. {self.name}\n\t    ID: '{self.id}'   DoB: {self.DoB}")        
 
 class Course:
     def __init__(self, id, name):
@@ -34,10 +33,9 @@ class Course:
         return self.name
 
     def display_info(self):
-        print(f'\t. {self.name}\n\t     ID: {self.id}')
+        print(f"\t. {self.name}   ID: '{(self.id).lower()}'")
 
 #   Main program
-
 def input_quantity(str):
     # Input number of students
     while True:
@@ -50,57 +48,86 @@ def input_quantity(str):
         else: print('Invalid number!')
     return n
 
-def check_if_exists(id, list):
+def is_exist(id, list):
     # Check if ID already exists
-    for i in list:
-        if i.get_id() == id:
+    if id in [i.get_id() for i in list]:
             return True
     return False
 
-def input_student_info(n):
-    # Input student information: id, name, DoB
-    print('\n-----  Enter student information:  -----')
-    student_list = []
+def input_info(str, n):
+    # Input student/course information
+    print(f'\n-----  Enter {str} information:  -----')
+    list = []
     for i in range(0, n, 1):
-        print('\nStudent no {}'.format(i + 1))
-        id = input('. Enter student ID: ').upper()
+        print(f'\n{str.capitalize()} no {i + 1}')
+        id = input(f'. Enter {str} ID: ').upper()
+        while is_exist(id, list) == True:
+            id = (input(f'''  (!) This ID is already taken
+                \r     Enter again {str} ID: ''')).upper()
+        name = input(f'. Enter {str} name: ')
 
-        while check_if_exists(id, student_list) == True:
-            id = (input('''  This ID is already taken
-            \r  Enter again student ID: ''')).upper()
-        name = input('. Enter student name: ')
-        DoB = input('. Enter student DoB: ')
-        
-        student = Student(id, name, DoB)
-        student_list.append(student)
-    return student_list
-
-def input_course_info(n):
-    # Input course information: id, name
-    print('\n-----  Enter course information:  -----')
-    course_list = []
-    for i in range(0, n, 1):
-        print('\nCourse no {}'.format(i + 1))
-        id = input('. Enter course ID: ').upper()
-
-        while check_if_exists(id, course_list) == True:
-            id = (input('''  This ID is already taken
-            \r  Enter again course ID: ''')).upper()
-        name = input('. Enter course name: ')
-
-        course = Course(id, name)
-        course_list.append(course)
-    return course_list
+        if str == 'student':      # If entering student information
+            DoB = input('. Enter student DoB: ')
+            object = Student(id, name, DoB)
+        elif str == 'course':    # If entering course information
+            object = Course(id, name)        
+        list.append(object)
+    return list    
 
 def display_list(list):
     # Show the list of students
     for i in list:
         i.display_info()
+    input('\nPress Enter to continue...')
+
+def id_to_name(list, str):
+    # Find name in the list using ID
+    while True:
+        id = input(f'\nEnter {str} ID: ').upper()
+        for i in list:
+            if i.get_id() == id:
+                return i.get_name()
+        print('Invalid ID!')
+
+def input_marks(course_list, student_list, marks_list):
+    # Input marks for student in a selected course
+    print('\n-----  Enter marks for students:  -----')
+    course_name = id_to_name(course_list, 'course')
+    print(f'Selected course: {course_name}')
+    student_name = id_to_name(student_list, 'student')
+    while True:
+        marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
+        try:
+            marks = float(marks)
+            if marks >= 0 and marks <= 20:
+                for i in range(len(marks_list)):
+                    if marks_list[i]['Student'] == student_name:
+                        marks_list[i][course_name] = marks
+                print('{} marks for {} is {}'.format(student_name, course_name, marks))
+                break
+            else: print('Invalid marks!')
+        except ValueError:  # If input is not a number
+            print("It's not a number!")
+    input('\nPress Enter to continue...')
+
+def show_marks(course_list, marks_list):
+    # Show marks of students for a selected course
+    course_name = id_to_name(course_list, 'course')
+    print('')
+    for i in marks_list:
+        if course_name in i:
+            print(f' {i["Student"]} marks for {course_name} is {i[course_name]}')
+        else: print(f' {i["Student"]} has not taken {course_name}')
+    input('\nPress Enter to continue...')
 
 studentCount = input_quantity('students')
 courseCount = input_quantity('courses')
-students = input_student_info(studentCount)
-courses = input_course_info(courseCount)
+students = input_info('student', studentCount)
+courses = input_info('course', courseCount)
+
+marks = []
+for i in students:
+    marks.append({'Student': i.get_name()})
 
 while True:
     opt = input('''
@@ -122,13 +149,12 @@ while True:
                 \r\n\tStudents list:''')
         display_list(students)
     elif opt == '3':    # Input course marks
-        # input_marks(course_list, student_list)
-        break   # Delete this now!
+        input_marks(courses, students, marks)
+        # print('\n', marks)
     elif opt == '4':    # Show student marks for a given course
-        # show_marks(course_list, student_list)
-        break   # Delete this now!
+        show_marks(courses, marks)
     elif opt == '0':    # Exit
         print('\n----------------- Bye ------------------\n')
         break
     else:
-        print('Invalid option!')
+        print(f'There is no option "{opt}"')
