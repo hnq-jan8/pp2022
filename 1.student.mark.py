@@ -83,7 +83,7 @@ def input_marks(course_list, student_list):
 def show_list_courses(course_list):
     # Show the list of courses
     for i in range(0, len(course_list), 1):
-        print("\t. {}   ID: '{}'".format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
+        print("\t. {}\n\t    ID: '{}'".format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
     input('\nPress Enter to continue...')
 
 def show_list_student(student_list):
