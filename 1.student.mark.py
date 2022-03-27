@@ -15,7 +15,7 @@ Functions
 '''
 
 def input_quantity(str):
-    # Input number of students
+    # Input number of students/courses
     while True:
         n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():   # Check if input is a natural number
