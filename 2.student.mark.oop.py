@@ -61,10 +61,8 @@ def input_quantity(str):
             n = int(n)
             if n > 0:
                 break
-            else:
-                print('Invalid number!')
-        else:
-            print('Invalid number!')
+            else: print('Invalid number!')
+        else: print('Invalid number!')
     return n
 
 def input_info(str, n):
