@@ -3,53 +3,54 @@ This program has all the same features as the previous one
 but it is an OOP version
 '''
 #   Classes: Student, Course
-class Student:
-    def __init__(self, id, name, DoB):
-        self.id = id
-        self.name = name
-        self.DoB = DoB
+from abc import ABC, abstractmethod
+
+class Entity(ABC):
+    @abstractmethod
+    def __init__(self, id, name):
+        self.__id = id
+        self.__name = name
 
     def get_id(self):
-        return self.id
+        return self.__id
 
     def get_name(self):
-        return self.name
+        return self.__name
 
     def display_info(self):
-        print(f"\t. {self.name}\n\t    ID: '{self.id}'   DoB: {self.DoB}")        
+        print(f"\t. {self.__name}\n\t    ID: '{self.__id}'")
 
-class Course:
+class Student(Entity):
+    def __init__(self, id, name, DoB):
+        super().__init__(id, name)
+        self.__DoB = DoB
+
+    def display_info(self):
+        print(f'''\t. {self.get_name()}
+            \r\t    ID: '{self.get_id()}'   DoB: {self.__DoB}''')
+
+class Course(Entity):
     def __init__(self, id, name):
-        self.id = id
-        self.name = name
-        self.marks = []         # list of dict {student_id: mark}
-
-    def get_id(self):
-        return self.id
-
-    def get_name(self):
-        return self.name
+        super().__init__(id, name)
+        self.__marks = []   # List of dict {student_id: mark}
 
     def get_marks(self):
-        return self.marks
-
-    def display_info(self):
-        print(f"\t. {self.name}\n\t    ID: '{(self.id).lower()}'")
+        return self.__marks
 
     def add_student(self, student_id):
-        self.marks.append({student_id: -1})
+        self.__marks.append({student_id: -1})   # -1 is the default mark
 
     def update_marks(self, student_id, marks):
-        for i in range(len(self.marks)):
-            if student_id in self.marks[i]:
-                self.marks[i][student_id] = marks
+        for i in range(len(self.__marks)):
+            if student_id in self.__marks[i]:
+                self.__marks[i][student_id] = marks
 
 #   Main program
 def input_quantity(str):
     # Input number of students
     while True:
         n = (input(f'\nEnter number of {str}: '))
-        if n.isdigit():         # Check if input is a natural number
+        if n.isdigit():     # Check if input is a natural number
             n = int(n)
             if n > 0:
                 break
@@ -113,11 +114,20 @@ def input_marks(course_list, student_list):
             print("It's not a number!")
     input('\nPress Enter to continue...')
 
-def show_marks(course_list):
+def show_marks(course_list, student_list):
     # Show marks of students for a selected course
     chosen_course = find_object(course_list, 'course')
     print('')
-    print(chosen_course.get_marks())
+    marks = chosen_course.get_marks()
+    course = chosen_course.get_name()
+    for i in range(len(marks)):
+        for key, value in marks[i].items():
+            for j in student_list:
+                if j.get_id() == key:
+                    student = j.get_name()
+                    if value != -1:
+                        print(f' {student} marks for {course} is {value}')
+                    else: print(f' {student} has not taken {course}')
     input('\nPress Enter to continue...')
 
 studentCount = input_quantity('students')
@@ -152,7 +162,7 @@ while True:
     elif opt == '3':    # Input course marks
         input_marks(courses, students)
     elif opt == '4':    # Show student marks for a given course
-        show_marks(courses)
+        show_marks(courses, students)
     elif opt == '0':    # Exit
         print('\n----------------- Bye ------------------\n')
         break
