@@ -6,10 +6,17 @@ but it is an OOP version
 from abc import ABC, abstractmethod
 
 class Entity(ABC):
+    ids = []    # List of used IDs
+
     @abstractmethod
-    def __init__(self, id, name):
+    def __init__(self):
+        id = input(f'. Enter {(type(self).__name__).lower()} ID: ').upper()
+        while id in self.ids:
+            id = (input(f'''  (!) This ID is already taken
+                \r     Enter again {(type(self).__name__).lower()} ID: ''')).upper()
         self.__id = id
-        self.__name = name
+        Entity.ids.append(self.__id)
+        self.__name = input(f'. Enter {(type(self).__name__).lower()} name: ')
 
     def get_id(self):
         return self.__id
@@ -18,20 +25,20 @@ class Entity(ABC):
         return self.__name
 
     def display_info(self):
-        print(f"\t. {self.__name}\n\t    ID: '{self.__id}'")
+        print(f"\t. {self.__name}\n\t    ID: '{(self.__id).lower()}'")
 
 class Student(Entity):
-    def __init__(self, id, name, DoB):
-        super().__init__(id, name)
-        self.__DoB = DoB
+    def __init__(self):
+        super().__init__()
+        self.__DoB = input(f'. Enter {(type(self).__name__).lower()} DoB: ')
 
     def display_info(self):
         print(f'''\t. {self.get_name()}
             \r\t    ID: '{self.get_id()}'   DoB: {self.__DoB}''')
 
 class Course(Entity):
-    def __init__(self, id, name):
-        super().__init__(id, name)
+    def __init__(self):
+        super().__init__()
         self.__marks = []   # List of dict {student_id: mark}
 
     def get_marks(self):
@@ -47,15 +54,17 @@ class Course(Entity):
 
 #   Main program
 def input_quantity(str):
-    # Input number of students
+    # Input number of students/courses
     while True:
         n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():     # Check if input is a natural number
             n = int(n)
             if n > 0:
                 break
-            else: print('Invalid number!')
-        else: print('Invalid number!')
+            else:
+                print('Invalid number!')
+        else:
+            print('Invalid number!')
     return n
 
 def input_info(str, n):
@@ -64,17 +73,10 @@ def input_info(str, n):
     list = []
     for i in range(0, n, 1):
         print(f'\n{str.capitalize()} no {i + 1}')
-        id = input(f'. Enter {str} ID: ').upper()
-        while id in [object.get_id() for object in list]:
-            id = (input(f'''  (!) This ID is already taken
-                \r     Enter again {str} ID: ''')).upper()
-        name = input(f'. Enter {str} name: ')
-
-        if str == 'student':    # If entering student information
-            DoB = input('. Enter student DoB: ')
-            object = Student(id, name, DoB)
-        elif str == 'course':   # If entering course information
-            object = Course(id, name)        
+        if str == 'student':
+            object = Student()
+        elif str == 'course':
+            object = Course()
         list.append(object)
     return list
 
@@ -96,11 +98,13 @@ def find_object(list, str):
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
+
     chosen_course = find_object(course_list, 'course')
     course_name = chosen_course.get_name()
     print(f'Selected course: {course_name}')
     chosen_student = find_object(student_list, 'student')
     student_name = chosen_student.get_name()
+
     while True:
         marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
         try:
@@ -111,7 +115,7 @@ def input_marks(course_list, student_list):
                 break
             else: print('Invalid marks!')
         except ValueError:      # If input is not a number
-            print("It's not a number!")
+            print("It's not a number!")            
     input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
@@ -121,7 +125,7 @@ def show_marks(course_list, student_list):
     marks = chosen_course.get_marks()
     course = chosen_course.get_name()
     for i in range(len(marks)):
-        for key, value in marks[i].items():
+        for key, value in marks[i].items():     # key = student_id, value = mark
             for j in student_list:
                 if j.get_id() == key:
                     student = j.get_name()
