@@ -120,53 +120,55 @@ def show_marks(course_list, student_list):
     # Show marks of students for a selected course
     chosen_course = find_object(course_list, 'course')
     print('')
-    marks = chosen_course.get_marks()
     course = chosen_course.get_name()
+    marks = chosen_course.get_marks()
     for i in range(len(marks)):
         for key, value in marks[i].items():     # key = student_id, value = mark
-            for j in student_list:
-                if j.get_id() == key:
-                    student = j.get_name()
-                    if value != -1:
-                        print(f' {student} marks for {course} is {value}')
-                    else: print(f' {student} has not taken {course}')
+            student = [j.get_name() for j in student_list if j.get_id() == key][0]
+            if value != -1:
+                print(f' {student} marks for {course} is {value}')
+            else: print(f' {student} has not taken {course}')
     input('\nPress Enter to continue...')
 
-studentCount = input_quantity('students')
-courseCount = input_quantity('courses')
-students = input_info('student', studentCount)
-courses = input_info('course', courseCount)
+def main():
+    studentCount = input_quantity('students')
+    courseCount = input_quantity('courses')
+    students = input_info('student', studentCount)
+    courses = input_info('course', courseCount)
 
-# Create a list of students for each course
-for i in courses:
-    for j in students:
-        i.add_student(j.get_id())
+    # Create a list of students for each course
+    for i in courses:
+        for j in students:
+            i.add_student(j.get_id())
 
-while True:
-    opt = input('''
-        \r----------------------------------------\n
-        \rChoose an option:
-        \r  1. List courses
-        \r  2. List students
-        \r  3. Update course marks
-        \r  4. Show student marks for a given course
-        \r  0. Exit\n
-        \rYour choice: ''')
+    while True:
+        opt = input('''
+            \r----------------------------------------\n
+            \rChoose an option:
+            \r  1. List courses
+            \r  2. List students
+            \r  3. Update course marks
+            \r  4. Show student marks for a given course
+            \r  0. Exit\n
+            \rYour choice: ''')
 
-    if opt == '1':      # List courses
-        print('''\n----------------------------------------
+        if opt == '1':      # List courses
+            print('''\n----------------------------------------
                 \r\n\tCourses list:''')
-        display_list(courses)
-    elif opt == '2':    # List students
-        print('''\n----------------------------------------
+            display_list(courses)
+        elif opt == '2':    # List students
+            print('''\n----------------------------------------
                 \r\n\tStudents list:''')
-        display_list(students)
-    elif opt == '3':    # Input course marks
-        input_marks(courses, students)
-    elif opt == '4':    # Show student marks for a given course
-        show_marks(courses, students)
-    elif opt == '0':    # Exit
-        print('\n----------------- Bye ------------------\n')
-        break
-    else:
-        print(f'There is no option "{opt}"')
+            display_list(students)
+        elif opt == '3':    # Input course marks
+            input_marks(courses, students)
+        elif opt == '4':    # Show student marks for a given course
+            show_marks(courses, students)
+        elif opt == '0':    # Exit
+            print('\n----------------- Bye ------------------\n')
+            break
+        else:
+            print(f'There is no option "{opt}"')
+
+if __name__ == '__main__':
+    main()
