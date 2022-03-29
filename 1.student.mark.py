@@ -15,7 +15,7 @@ Functions
 '''
 
 def input_quantity(str):
-    # Input number of students/courses
+    # Input number of students/course
     while True:
         n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():   # Check if input is a natural number
@@ -55,14 +55,14 @@ def id_to_name(list, str):
             break
         else:
             print(f'Invalid {str} ID!')
-    return element_name
+    return element_name, element_id
 
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
-    course_name = id_to_name(course_list, 'course')
+    course_name, course_id = id_to_name(course_list, 'course')
     print(f'Selected course: {course_name}')
-    student_name = id_to_name(student_list, 'student')
+    student_name, student_ID = id_to_name(student_list, 'student')
 
     while True:
         marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
@@ -71,7 +71,7 @@ def input_marks(course_list, student_list):
             if marks >= 0 and marks <= 20:
                 print('{} marks for {} is {}'.format(student_name, course_name, marks))
                 for i in range(0, len(student_list), 1):
-                    if student_list[i]['Name'] == student_name:
+                    if student_list[i]['ID'] == student_ID:
                         student_list[i][course_name] = marks
                 break
             else: print('Invalid marks!')
@@ -94,7 +94,7 @@ def show_list_student(student_list):
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
-    course_name = id_to_name(course_list, 'course')
+    course_name, course_id = id_to_name(course_list, 'course')
     print('')
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
