@@ -15,7 +15,7 @@ Functions
 '''
 
 def input_quantity(str):
-    # Input number of students/course
+    # Input number of students/courses
     while True:
         n = (input(f'\nEnter number of {str}: '))
         if n.isdigit():   # Check if input is a natural number
@@ -60,7 +60,7 @@ def id_to_name(list, str):
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
-    course_name, course_id = id_to_name(course_list, 'course')
+    course_name, __id = id_to_name(course_list, 'course')
     print(f'Selected course: {course_name}')
     student_name, student_ID = id_to_name(student_list, 'student')
 
@@ -94,7 +94,7 @@ def show_list_student(student_list):
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
-    course_name, course_id = id_to_name(course_list, 'course')
+    course_name, __id = id_to_name(course_list, 'course')
     print('')
     for i in range(0, len(student_list), 1):
         student_name = student_list[i]['Name']
