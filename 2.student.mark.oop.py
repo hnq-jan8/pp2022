@@ -98,22 +98,23 @@ def input_marks(course_list, student_list):
     print('\n-----  Enter marks for students:  -----')
 
     chosen_course = find_object(course_list, 'course')
-    course_name = chosen_course.get_name()
-    print(f'Selected course: {course_name}')
-    chosen_student = find_object(student_list, 'student')
-    student_name = chosen_student.get_name()
+    course = chosen_course.get_name()
+    print(f'Selected course: {course}')
+    # chosen_student = find_object(student_list, 'student')
+    # student_name = chosen_student.get_name()
 
-    while True:
-        marks = input(f'\nEnter marks of {course_name} for student {student_name} (0, 20): ')
-        try:
-            marks = float(marks)
-            if marks >= 0 and marks <= 20:
-                chosen_course.update_marks(chosen_student.get_id(), marks)
-                print(f'{student_name} marks for {course_name} is {marks}')
-                break
-            else: print('Invalid marks!')
-        except ValueError:      # If input is not a number
-            print("It's not a number!")            
+    for student in student_list:
+        while True:
+            marks = input(f'\nEnter marks of {course} for student {student.get_name()} (0, 20): ')
+            try:
+                marks = float(marks)
+                if marks >= 0 and marks <= 20:
+                    chosen_course.update_marks(student.get_id(), marks)
+                    print(f'{student.get_name()} marks for {course} is {marks}')
+                    break
+                else: print('Invalid marks!')
+            except ValueError:      # If input is not a number
+                print("It's not a number!")            
     input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
