@@ -70,9 +70,9 @@ def input_marks(course_list, student_list):
             marks = float(marks)
             if marks >= 0 and marks <= 20:
                 print('{} marks for {} is {}'.format(student_name, course_name, marks))
-                for i in range(0, len(student_list), 1):
-                    if student_list[i]['ID'] == student_ID:
-                        student_list[i][course_name] = marks
+                for student in student_list:
+                    if student['ID'] == student_ID:
+                        student[course_name] = marks
                 break
             else: print('Invalid marks!')
         except ValueError:  # If input is not a number
@@ -82,24 +82,24 @@ def input_marks(course_list, student_list):
 
 def show_list_courses(course_list):
     # Show the list of courses
-    for i in range(0, len(course_list), 1):
-        print("\t. {}\n\t    ID: '{}'".format(course_list[i]['Name'], (course_list[i]['ID']).lower()))
+    for course in course_list:
+        print("\t. {}\n\t    ID: '{}'".format(course['Name'], (course['ID']).lower()))
     input('\nPress Enter to continue...')
 
 def show_list_student(student_list):
     # Show the list of students
-    for i in range(0, len(student_list), 1):
-        print(f"\t. {student_list[i]['Name']}\n\t    ID: '{student_list[i]['ID']}'   DoB: {student_list[i]['DoB']}")
+    for student in student_list:
+        print(f"\t. {student['Name']}\n\t    ID: '{student['ID']}'   DoB: {student['DoB']}")
     input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
     # Show student marks for a selected course
     course_name, __id = id_to_name(course_list, 'course')
     print('')
-    for i in range(0, len(student_list), 1):
-        student_name = student_list[i]['Name']
-        if course_name in student_list[i]:
-            marks = student_list[i][course_name]
+    for student in student_list:
+        student_name = student['Name']
+        if course_name in student:
+            marks = student[course_name]
             print(' {} marks for {} is {}'.format(student_name, course_name, marks))
         else:
             print(' {} has not taken {}'.format(student_name, course_name))
