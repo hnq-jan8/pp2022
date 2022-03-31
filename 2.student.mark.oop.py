@@ -100,8 +100,6 @@ def input_marks(course_list, student_list):
     chosen_course = find_object(course_list, 'course')
     course = chosen_course.get_name()
     print(f'Selected course: {course}')
-    # chosen_student = find_object(student_list, 'student')
-    # student_name = chosen_student.get_name()
 
     for student in student_list:
         while True:
@@ -114,7 +112,7 @@ def input_marks(course_list, student_list):
                     break
                 else: print('Invalid marks!')
             except ValueError:      # If input is not a number
-                print("It's not a number!")            
+                print("It's not a number!")
     input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
