@@ -2,6 +2,7 @@
 This program has all the same features as the previous one
 but ...
 '''
+import math
 #   Classes: Student, Course
 from abc import ABC, abstractmethod
 
@@ -93,28 +94,32 @@ def find_object(list, str):
                 return object
         print(f'Invalid {str} ID!')
 
+def round_number(number):
+    # Round number to 1 decimal places
+    number *= 10
+    if number - math.floor(number) >= 0.5:
+        return math.ceil(number) / 10
+    return math.floor(number) / 10
+
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
     print('\n-----  Enter marks for students:  -----')
-
     chosen_course = find_object(course_list, 'course')
     course = chosen_course.get_name()
     print(f'Selected course: {course}')
-    # chosen_student = find_object(student_list, 'student')
-    # student_name = chosen_student.get_name()
 
     for student in student_list:
         while True:
             marks = input(f'\nEnter marks of {course} for student {student.get_name()} (0, 20): ')
             try:
-                marks = float(marks)
+                marks = round_number(float(marks))
                 if marks >= 0 and marks <= 20:
                     chosen_course.update_marks(student.get_id(), marks)
                     print(f'{student.get_name()} marks for {course} is {marks}')
                     break
                 else: print('Invalid marks!')
             except ValueError:      # If input is not a number
-                print("It's not a number!")            
+                print("It's not a number!")
     input('\nPress Enter to continue...')
 
 def show_marks(course_list, student_list):
