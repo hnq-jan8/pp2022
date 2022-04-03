@@ -115,7 +115,7 @@ def rounded(number):
     # Round number to 1 decimal places
     number *= 10
     if number - math.floor(number) >= 0.5:
-        return math.floor(number) / 10 + 0.1
+        return math.floor(number + 1) / 10
     return math.floor(number) / 10
 
 def input_marks(course_list, student_list):
