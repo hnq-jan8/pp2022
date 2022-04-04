@@ -1,12 +1,12 @@
-from input import input_quantity, input_info, display_list, input_marks, calculate_gpa, show_marks
+import input as ip
 
 if __name__ == '__main__':
 
 #   Main program
-    studentCount = input_quantity('students')
-    courseCount = input_quantity('courses')
-    students = input_info('student', studentCount)
-    courses = input_info('course', courseCount)
+    studentCount = ip.input_quantity('students')
+    courseCount = ip.input_quantity('courses')
+    students = ip.input_info('student', studentCount)
+    courses = ip.input_info('course', courseCount)
 
     # Create a list courses marks for each student
     for i in students:
@@ -25,20 +25,20 @@ if __name__ == '__main__':
             \rYour choice: ''')
 
         if opt == '1':      # Show students list in descending order of GPA
-            calculate_gpa(courses, students)
-            display_list(students, 'student')
+            ip.calculate_gpa(courses, students)
+            ip.display_list(students, 'student')
         elif opt == '2':    # Show courses list
-            display_list(courses, 'course')
+            ip.display_list(courses, 'course')
         elif opt == '3':    # Select a course and update marks
             confirm = input('''
                 \rYou are going to choose a course and update marks for all students.
                     \rType 'y' to confirm: ''').lower()
             if confirm == 'y':
-                input_marks(courses, students)
+                ip.input_marks(courses, students)
             else: 
                 print('\nOperation canceled!')
         elif opt == '4':    # Show marks list
-            show_marks(courses, students)
+            ip.show_marks(courses, students)
         elif opt == '0':    # Exit
             print('\n----------------- Bye ------------------\n')
             break
