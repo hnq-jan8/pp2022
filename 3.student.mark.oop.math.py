@@ -125,14 +125,14 @@ def input_marks(course_list, student_list):
     course = chosen_course.get_name()
     print(f'Selected course: {course}')
 
-    for student in student_list:
+    for s in student_list:
         while True:
-            marks = input(f'\nEnter marks of {course} for {student.get_name()} (0, 20): ')
+            marks = input(f'\nEnter marks for {s.get_id()} ~ {s.get_name()} (0, 20): ')
             try:
                 marks = rounded(float(marks))
                 if marks >= 0 and marks <= 20:
-                    student.update_marks(c, marks)
-                    print(f'{student.get_name()} marks for {course} is {marks}')
+                    s.update_marks(c, marks)
+                    print(f'{s.get_name()} marks for {course} is {marks}')
                     break
                 else: print('Invalid marks!')
             except ValueError:      # If input is not a number
