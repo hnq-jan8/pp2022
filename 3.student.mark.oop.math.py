@@ -152,7 +152,8 @@ def show_marks(course_list, student_list):
     input('\nPress Enter to continue...')
 
 def calculate_gpa(course_list, student_list):
-    # Calculate GPA for all students and sort them by GPA in descending order
+    # Calculate GPA for all students and sort students by GPA in descending order
+    GPA_list = np.array([])
     for student in student_list:
         marks = np.array([])
         credits = np.array([])
@@ -163,12 +164,15 @@ def calculate_gpa(course_list, student_list):
             else: continue
         if credits.sum() != 0:  # If student has taken at least one course
             student.update_gpa(rounded((marks * credits).sum() / credits.sum()))
-        else: continue
+        GPA_list = np.append(GPA_list, student.get_gpa())
 
-    for i in range(len(student_list)):  # Sort students by GPA
-        for j in range(i + 1, len(student_list)):
-            if student_list[i].get_gpa() < student_list[j].get_gpa():
-                student_list[i], student_list[j] = student_list[j], student_list[i]
+    GPA_list = np.sort(GPA_list)[::-1]      # Sort GPA in descending order    
+    for i in GPA_list:                      # Sort students list by sorted GPA
+        for student in student_list:
+            if student.get_gpa() == i:
+                student_list.append(student)
+                student_list.remove(student)
+                break
 
 if __name__ == '__main__':
 
