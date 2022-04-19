@@ -9,7 +9,7 @@ class Manager:
 
         # Create a list courses marks for each student
         for i in students:
-            for j in range(courseCount):
+            for _ in range(courseCount):
                 i.add_course()
 
         while True:
