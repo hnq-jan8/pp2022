@@ -18,3 +18,9 @@ class Entity(ABC):
 
     def get_name(self):
         return self.__name
+
+    def set_id(self, id):
+        self.__id = id
+
+    def set_name(self, name):
+        self.__name = name

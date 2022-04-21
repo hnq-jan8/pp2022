@@ -2,14 +2,21 @@ import input as ip
 
 class Manager:
     def run(self):
-        studentCount = ip.input_quantity('students')
-        courseCount = ip.input_quantity('courses')
-        students = ip.input_info('student', studentCount)
-        courses = ip.input_info('course', courseCount)
+        if ip.is_students_data_exist():
+        # If the students.dat is exists, read the data from the file
+            students = ip.read_info('students')
+            courses = ip.read_info('courses')
 
-        # Create a list courses marks for each student
+
+        else:
+            studentCount = ip.input_quantity('students')
+            courseCount = ip.input_quantity('courses')
+            students = ip.input_info('student', studentCount)
+            courses = ip.input_info('course', courseCount)
+
+            # Create a list courses marks for each student
         for i in students:
-            for _ in range(courseCount):
+            for _ in range(len(courses)):
                 i.add_course()
 
         while True:

@@ -4,6 +4,24 @@ import numpy as np
 from domains.Student import Student
 from domains.Course import Course
 
+def is_students_data_exist():
+    # Check if students.dat file exists
+    if os.path.exists('students.dat'):
+        return True
+    return False
+
+def read_info(str):
+    # Read student/course information from a file
+    list = []
+    with open(f'{str}.txt', 'r') as file:
+        for line in file:
+            if str == 'students':
+                object = Student(line)
+            elif str == 'courses':
+                object = Course(line)
+            list.append(object)
+    return list
+
 def input_quantity(str):
     # Input number of students/courses
     n = input(f'\nEnter number of {str}: ')
@@ -30,14 +48,14 @@ def write_info(str, list):
     # Write student/course information to a file
     with open(f'{str}.txt', 'w') as file:
         for object in list:
-            file.write(f'{object}\n\n')
+            file.write(f'{object}\n')
 
 def display_list(list, str):
     # Show the list of students
     print(f'''\n----------------------------------------
     \r\n\t{str.capitalize()} list:''')
     for object in list:
-        print(object)
+        print(object.display_info())
     input('\nPress Enter to continue...')
 
 def find_object(list, str):
