@@ -5,6 +5,21 @@ import numpy as np
 from domains.Student import Student
 from domains.Course import Course
 
+def students_data_exist():
+    # Check if students.dat file exists
+    if os.path.exists('students.dat'):
+        return True
+    return False    
+
+def read_info(str):
+    # Read student/course information from a file
+    list = []
+    with open(f'{str + "s"}.txt', 'r') as file:
+        for line in file:
+            object = eval(line)
+            list.append(object)
+    return list
+
 def input_quantity(str):
     # Input number of students/courses
     n = input(f'\nEnter number of {str}: ')
@@ -24,14 +39,14 @@ def input_info(str, n):
         elif str == 'course':
             object = Course()
         list.append(object)
-    write_info(str + 's', list)
+    write_info(str, list)
     return list
 
 def write_info(str, list):
     # Write student/course information to a file
-    with open(f'{str}.txt', 'w') as file:
+    with open(f'{str + "s"}.txt', 'w') as file:
         for object in list:
-            file.write(f'{object}\n\n')
+            file.write(f'{repr(object)}\n')
 
 def display_list(list, str):
     # Show the list of students
@@ -94,11 +109,11 @@ def write_marks(course_list, student_list):
     # Write marks of students for a selected course to a file
     with open('marks.txt', 'w') as file:
         for i, course in enumerate(course_list):
-            file.write(f'\n{course.get_name()}:')
+            file.write(f'{course.get_name()}:\n')
             for student in student_list:
                 if student.get_marks()[i] != -1:
-                    file.write(f'\n\t{student.get_name()}: {student.get_marks()[i]}')
-                else: file.write(f'\n\t{student.get_name()}: not taken')
+                    file.write(f'\t{student.get_name()}: {student.get_marks()[i]}\n')
+                else: file.write(f'\t{student.get_name()}: not taken\n')
 
 def calculate_gpa(course_list, student_list):
     # Calculate GPA for all students and sort students by GPA in descending order
