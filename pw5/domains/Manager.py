@@ -19,8 +19,7 @@ class Manager:
                 i.add_course(courseCount)
 
         while True:
-            ip.calculate_gpa(courses, students)     # Auto calculate GPA and sort
-            
+            ip.calculate_gpa(courses, students)     # Auto calculate GPA and sort            
             # Auto save marks info
             ip.write_marks(courses, students)
             ip.write_info('student', students)
@@ -34,7 +33,6 @@ class Manager:
                 \r  4. Marks list
                 \r  0. Exit\n
                 \rYour choice: ''')
-
             if opt == '1':      # Show students list
                 ip.display_list(students, 'student')
             elif opt == '2':    # Show courses list

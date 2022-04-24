@@ -7,7 +7,7 @@ class Course(Entity):
             c = input('. Enter course credits: ')
             while not c.isdigit() or int(c) < 1:
                 c = input(f'''  (!) Invalid number for credits
-                    \r     Enter again course credits: ''')
+                            \r     Try again: ''')
             self.__credits = int(c)
         else:
             self.set_id(id)
