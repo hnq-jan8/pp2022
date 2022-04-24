@@ -2,19 +2,28 @@ import input as ip
 
 class Manager:
     def run(self):
-        studentCount = ip.input_quantity('students')
-        courseCount = ip.input_quantity('courses')
-        students = ip.input_info('student', studentCount)
-        courses = ip.input_info('course', courseCount)
+        if ip.students_data_exist():
+        # If the students.dat is exists, read the data from the file
+            print('\nFound students.dat. Reading data...')
+            ip.decompress_file()
+            students = ip.read_info('student')
+            courses = ip.read_info('course')
+        else:
+            studentCount = ip.input_quantity('students')
+            courseCount = ip.input_quantity('courses')
+            students = ip.input_info('student', studentCount)
+            courses = ip.input_info('course', courseCount)
 
-        # Create a list courses marks for each student
-        for i in students:
-            for _ in range(courseCount):
-                i.add_course()
+            # Create a list courses marks for each student
+            for i in students:
+                i.add_course(courseCount)
 
         while True:
             ip.calculate_gpa(courses, students)     # Auto calculate GPA and sort
-            ip.write_marks(courses, students)       # Auto save marks to a file
+            
+            # Auto save marks info
+            ip.write_marks(courses, students)
+            ip.write_info('student', students)
 
             opt = input('''
                 \r----------------------------------------\n
@@ -43,11 +52,15 @@ class Manager:
             elif opt == '0':    # Exit
                 # Ask for a compression of all files
                 confirm = input('''
-                    \rDo you want to compress all files?
-                        \rType 'y' to confirm: ''').lower()
+                                \rDo you want to save before exit?
+                                \rType 'y' for yes: ''').lower()
                 if confirm == 'y':
                     ip.compress_files()
                 print('\n----------------- Bye ------------------\n')
+                # Delete all created txt files
+                ip.delete_file('students.txt')
+                ip.delete_file('courses.txt')
+                ip.delete_file('marks.txt')
                 break
             else:
                 print(f'There is no option "{opt}"')

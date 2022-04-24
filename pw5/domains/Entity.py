@@ -6,15 +6,28 @@ class Entity(ABC):
     @abstractmethod
     def __init__(self):
         id = input(f'. Enter {(type(self).__name__).lower()} ID: ').upper()
-        while id in self.ids:
-            id = input(f'''  (!) This ID is already taken
-                \r     Enter again {(type(self).__name__).lower()} ID: ''').upper()
+        while id in self.ids or id == '':
+            if id == '':
+                id = input(f'  (!) {type(self).__name__} ID is required! Try again: ').upper()
+            else:
+                id = input(f'''  (!) This ID is already taken
+                            \r     Enter again {(type(self).__name__).lower()} ID: ''').upper()
         self.__id = id
         Entity.ids.append(self.__id)
-        self.__name = input(f'. Enter {(type(self).__name__).lower()} name: ')
+        name = input(f'. Enter {(type(self).__name__).lower()} name: ')
+        while name == '':
+            name = input(f'  (!) {type(self).__name__} name is required! Try again: ')
+        self.__name = name
+
 
     def get_id(self):
         return self.__id
 
     def get_name(self):
         return self.__name
+
+    def set_id(self, id):
+        self.__id = id
+
+    def set_name(self, name):
+        self.__name = name
