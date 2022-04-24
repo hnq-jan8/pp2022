@@ -1,24 +1,22 @@
 import os
 import math
+import zipfile
 import numpy as np
 from domains.Student import Student
 from domains.Course import Course
 
-def is_students_data_exist():
+def students_data_exist():
     # Check if students.dat file exists
     if os.path.exists('students.dat'):
         return True
-    return False
+    return False    
 
 def read_info(str):
     # Read student/course information from a file
     list = []
-    with open(f'{str}.txt', 'r') as file:
+    with open(f'{str + "s"}.txt', 'r') as file:
         for line in file:
-            if str == 'students':
-                object = Student(line)
-            elif str == 'courses':
-                object = Course(line)
+            object = eval(line)
             list.append(object)
     return list
 
@@ -41,21 +39,21 @@ def input_info(str, n):
         elif str == 'course':
             object = Course()
         list.append(object)
-    write_info(str + 's', list)
+    write_info(str, list)
     return list
 
 def write_info(str, list):
     # Write student/course information to a file
-    with open(f'{str}.txt', 'w') as file:
+    with open(f'{str + "s"}.txt', 'w') as file:
         for object in list:
-            file.write(f'{object}\n')
+            file.write(f'{repr(object)}\n')
 
 def display_list(list, str):
     # Show the list of students
     print(f'''\n----------------------------------------
     \r\n\t{str.capitalize()} list:''')
     for object in list:
-        print(object.display_info())
+        print(object)
     input('\nPress Enter to continue...')
 
 def find_object(list, str):
@@ -111,11 +109,11 @@ def write_marks(course_list, student_list):
     # Write marks of students for a selected course to a file
     with open('marks.txt', 'w') as file:
         for i, course in enumerate(course_list):
-            file.write(f'\n{course.get_name()}:')
+            file.write(f'{course.get_name()}:\n')
             for student in student_list:
                 if student.get_marks()[i] != -1:
-                    file.write(f'\n\t{student.get_name()}: {student.get_marks()[i]}')
-                else: file.write(f'\n\t{student.get_name()}: not taken')
+                    file.write(f'\t{student.get_name()}: {student.get_marks()[i]}\n')
+                else: file.write(f'\t{student.get_name()}: not taken\n')
 
 def calculate_gpa(course_list, student_list):
     # Calculate GPA for all students and sort students by GPA in descending order
@@ -142,10 +140,25 @@ def calculate_gpa(course_list, student_list):
 
 def compress_files():
     # Compress student.txt, course.txt and marks.txt to a .dat file
-    with open('students.dat', 'wb') as file:
-        with open('students.txt', 'r') as file1:
-            file.write(file1.read().encode())
-        with open ('courses.txt', 'r') as file2:
-            file.write(file2.read().encode())
-        with open('marks.txt', 'r') as file3:
-            file.write(file3.read().encode())
+    # with open('students.dat', 'wb') as file:
+    #     with open('students.txt', 'r') as file1:
+    #         file.write(file1.read().encode())
+    #     with open ('courses.txt', 'r') as file2:
+    #         file.write(file2.read().encode())
+    #     with open('marks.txt', 'r') as file3:
+    #         file.write(file3.read().encode())
+
+    # Compress student.txt, course.txt and marks.txt to a .zip file using zipfile module
+    with zipfile.ZipFile('students.dat', 'w') as file:
+        file.write('students.txt')
+        file.write('courses.txt')
+        file.write('marks.txt')
+
+def decompress_file():
+    # Decompress students.dat to students.txt and courses.txt using zipfile module
+    with zipfile.ZipFile('students.dat', 'r') as file:
+        file.extractall()
+
+def delete_file(filename):
+    # Delete a file
+    os.remove(filename)

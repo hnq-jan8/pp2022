@@ -14,12 +14,12 @@ class Course(Entity):
             self.set_name(name)
             self.__credits = int(credits)
 
-    def __str__(self):
-        return f'{self.get_id()}\n{self.get_name()}\n{self.__credits}'
+    def __repr__(self):
+        return f"Course('{self.get_id()}', '{self.get_name()}', '{self.__credits}')"
 
     def get_credits(self):
         return self.__credits
 
-    def display_info(self):
+    def __str__(self):
         return f'''\t. {self.get_name()}
             \r\t    ID: '{self.get_id().lower()}' \t Credits: {self.__credits}'''
