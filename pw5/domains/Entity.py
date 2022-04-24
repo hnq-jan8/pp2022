@@ -10,8 +10,8 @@ class Entity(ABC):
             if id == '':
                 id = input(f'  (!) {type(self).__name__} ID is required! Try again: ').upper()
             else:
-                id = input(f'''  (!) This ID is already taken
-                            \r     Enter again {(type(self).__name__).lower()} ID: ''').upper()
+                id = input(f'''  (!) This {(type(self).__name__).lower()} ID is already taken
+                            \r     Try again: ''').upper()
         self.__id = id
         Entity.ids.append(self.__id)
         name = input(f'. Enter {(type(self).__name__).lower()} name: ')

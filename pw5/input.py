@@ -139,15 +139,6 @@ def calculate_gpa(course_list, student_list):
                 break
 
 def compress_files():
-    # Compress student.txt, course.txt and marks.txt to a .dat file
-    # with open('students.dat', 'wb') as file:
-    #     with open('students.txt', 'r') as file1:
-    #         file.write(file1.read().encode())
-    #     with open ('courses.txt', 'r') as file2:
-    #         file.write(file2.read().encode())
-    #     with open('marks.txt', 'r') as file3:
-    #         file.write(file3.read().encode())
-
     # Compress student.txt, course.txt and marks.txt to a .zip file using zipfile module
     with zipfile.ZipFile('students.dat', 'w') as file:
         file.write('students.txt')
