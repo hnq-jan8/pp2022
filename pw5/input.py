@@ -1,5 +1,6 @@
 import os
 import math
+import zipfile
 import numpy as np
 from domains.Student import Student
 from domains.Course import Course
@@ -123,11 +124,17 @@ def calculate_gpa(course_list, student_list):
                 break
 
 def compress_files():
-    # Compress student.txt, course.txt and marks.txt to a .dat file
-    with open('students.dat', 'wb') as file:
-        with open('students.txt', 'r') as file1:
-            file.write(file1.read().encode())
-        with open ('courses.txt', 'r') as file2:
-            file.write(file2.read().encode())
-        with open('marks.txt', 'r') as file3:
-            file.write(file3.read().encode())
+    # Compress student.txt, course.txt and marks.txt to a .zip file using zipfile module
+    with zipfile.ZipFile('students.dat', 'w') as file:
+        file.write('students.txt')
+        file.write('courses.txt')
+        file.write('marks.txt')
+
+def decompress_file():
+    # Decompress students.dat to students.txt and courses.txt using zipfile module
+    with zipfile.ZipFile('students.dat', 'r') as file:
+        file.extractall()
+
+def delete_file(filename):
+    # Delete a file
+    os.remove(filename)
