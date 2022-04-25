@@ -1,22 +1,32 @@
 import input as ip
 
 class Manager:
+    def input_data(self):
+        studentCount = ip.input_quantity('students')
+        courseCount = ip.input_quantity('courses')
+        students = ip.input_info('student', studentCount)
+        courses = ip.input_info('course', courseCount)
+
+        # Create a list courses marks for each student
+        for i in students:
+            i.add_course(courseCount)
+
+        return students, courses
+
     def run(self):
         if ip.students_data_exist():
         # If the students.dat is exists, read the data from the file
             print('\nFound students.dat. Reading data...')
-            ip.decompress_file()
-            students = ip.read_info('student')
-            courses = ip.read_info('course')
+            try:
+                ip.decompress_file()
+                students = ip.read_info('student')
+                courses = ip.read_info('course')
+            except Exception as e:
+                print(f'\n(!) Error: {e}')
+                input('Press Enter to continue...')
+                students, courses = self.input_data()
         else:
-            studentCount = ip.input_quantity('students')
-            courseCount = ip.input_quantity('courses')
-            students = ip.input_info('student', studentCount)
-            courses = ip.input_info('course', courseCount)
-
-            # Create a list courses marks for each student
-            for i in students:
-                i.add_course(courseCount)
+            students, courses = self.input_data()
 
         while True:
             ip.calculate_gpa(courses, students)     # Auto calculate GPA and sort            
