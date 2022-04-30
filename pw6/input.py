@@ -1,5 +1,6 @@
 import os
 import math
+import pickle
 import zipfile
 import numpy as np
 from domains.Student import Student
@@ -14,10 +15,12 @@ def students_data_exist():
 def read_info(str):
     # Read student/course information from a file
     list = []
-    with open(f'{str + "s"}.txt', 'r') as file:
-        for line in file:
-            object = eval(line)
-            list.append(object)
+    # with open(f'{str + "s"}.txt', 'r') as file:
+    #     for line in file:
+    #         object = eval(line)
+    #         list.append(object)
+    with open(f'{str + "s"}.txt', 'rb') as file:
+        list = pickle.load(file)
     return list
 
 def input_quantity(str):
@@ -44,9 +47,11 @@ def input_info(str, n):
 
 def write_info(str, list):
     # Write student/course information to a file
-    with open(f'{str + "s"}.txt', 'w') as file:
-        for object in list:
-            file.write(f'{repr(object)}\n')
+    # with open(f'{str + "s"}.txt', 'w') as file:
+    #     for object in list:
+    #         file.write(f'{repr(object)}\n')
+    with open(f'{str + "s"}.txt', 'wb') as file:
+        pickle.dump(list, file)
 
 def display_list(list, str):
     # Show the list of students
@@ -108,6 +113,7 @@ def show_marks(course_list, student_list):
 
 def write_marks(course_list, student_list):
     # Write marks of students for a selected course to a file
+    # Remaining old method because of not using a separate class for Marks
     with open('marks.txt', 'w') as file:
         for i, course in enumerate(course_list):
             file.write(f'{course.get_name()}:\n')
