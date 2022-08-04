@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Entity(ABC):
     ids = []    # List of used IDs
 
@@ -8,7 +9,8 @@ class Entity(ABC):
         id = input(f'. Enter {(type(self).__name__).lower()} ID: ').upper()
         while id in self.ids or id == '':
             if id == '':
-                id = input(f'  (!) {type(self).__name__} ID is required! Try again: ').upper()
+                id = input(
+                    f'  (!) {type(self).__name__} ID is required! Try again: ').upper()
             else:
                 id = input(f'''  (!) This {(type(self).__name__).lower()} ID is already taken
                             \r     Try again: ''').upper()
@@ -16,9 +18,9 @@ class Entity(ABC):
         Entity.ids.append(self.__id)
         name = input(f'. Enter {(type(self).__name__).lower()} name: ')
         while name == '':
-            name = input(f'  (!) {type(self).__name__} name is required! Try again: ')
+            name = input(
+                f'  (!) {type(self).__name__} name is required! Try again: ')
         self.__name = name
-
 
     def get_id(self):
         return self.__id

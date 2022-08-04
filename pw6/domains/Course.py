@@ -1,7 +1,8 @@
 from domains.Entity import Entity
 
+
 class Course(Entity):
-    def __init__(self, id = None, name = None, credits = None):
+    def __init__(self, id=None, name=None, credits=None):
         if id == None:
             super().__init__()
             c = input('. Enter course credits: ')

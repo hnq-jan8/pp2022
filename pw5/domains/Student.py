@@ -1,7 +1,8 @@
 from domains.Entity import Entity
 
+
 class Student(Entity):
-    def __init__(self, id = None, name = None, DoB = None, mark = None):
+    def __init__(self, id=None, name=None, DoB=None, mark=None):
         if id == None:
             super().__init__()
             DoB = input(f'. Enter {(type(self).__name__).lower()} DoB: ')

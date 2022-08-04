@@ -1,6 +1,7 @@
 from input import *
 import time
 
+
 class Manager:
     def input_data(self):
         studentCount = input_quantity('students')
@@ -16,7 +17,7 @@ class Manager:
 
     def run(self):
         if students_data_exist():
-        # If the students.dat is exists, read the data from the file
+            # If the students.dat is exists, read the data from the file
             print()
             for i in range(0, 5):
                 print('Found students.dat. Reading data' + '.'*i, end='\r')
@@ -35,7 +36,7 @@ class Manager:
             students, courses = self.input_data()
 
         while True:
-            calculate_gpa(courses, students)     # Auto calculate GPA and sort            
+            calculate_gpa(courses, students)     # Auto calculate GPA and sort
             # Auto save marks info
             write_marks(courses, students)
             write_info('student', students)
@@ -59,7 +60,7 @@ class Manager:
                         \rType 'y' to confirm: ''').lower()
                 if confirm == 'y':
                     input_marks(courses, students)
-                else: 
+                else:
                     print('\nOperation canceled!')
             elif opt == '4':    # Show marks list
                 show_marks(courses, students)
@@ -71,7 +72,8 @@ class Manager:
                 if confirm == 'y':
                     compress_files()
                     print('\nSave successfully!')
-                else: print('\nExit without saving!')
+                else:
+                    print('\nExit without saving!')
                 print('\n----------------- Bye ------------------\n')
                 # Delete all created txt files
                 delete_file('students.txt')

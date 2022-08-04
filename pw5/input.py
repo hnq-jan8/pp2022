@@ -5,11 +5,13 @@ import numpy as np
 from domains.Student import Student
 from domains.Course import Course
 
+
 def students_data_exist():
     # Check if students.dat file exists
     if os.path.exists('students.dat'):
         return True
-    return False    
+    return False
+
 
 def read_info(str):
     # Read student/course information from a file
@@ -20,6 +22,7 @@ def read_info(str):
             list.append(object)
     return list
 
+
 def input_quantity(str):
     # Input number of students/courses
     n = input(f'\nEnter number of {str}: ')
@@ -27,6 +30,7 @@ def input_quantity(str):
         n = input(f''' (!) Invalid number for {str}
             \r    Enter again number of {str}: ''')
     return int(n)
+
 
 def input_info(str, n):
     # Input student/course information
@@ -42,11 +46,13 @@ def input_info(str, n):
     write_info(str, list)
     return list
 
+
 def write_info(str, list):
     # Write student/course information to a file
     with open(f'{str + "s"}.txt', 'w') as file:
         for object in list:
             file.write(f'{repr(object)}\n')
+
 
 def display_list(list, str):
     # Show the list of students
@@ -55,6 +61,7 @@ def display_list(list, str):
     for object in list:
         print(object)
     input('\nPress Enter to continue...')
+
 
 def find_object(list, str):
     # Find object in the list using ID
@@ -65,12 +72,14 @@ def find_object(list, str):
                 return object, i
         print(f'Invalid {str} ID!')
 
+
 def rounded(number):
     # Round number to 1 decimal places
     number *= 10
     if number - math.floor(number) >= 0.5:
         return math.floor(number + 1) / 10
     return math.floor(number) / 10
+
 
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
@@ -81,18 +90,21 @@ def input_marks(course_list, student_list):
 
     for s in student_list:
         while True:
-            marks = input(f'\nEnter marks for {s.get_id()} ~ {s.get_name()} (0, 20): ')
+            marks = input(
+                f'\nEnter marks for {s.get_id()} ~ {s.get_name()} (0, 20): ')
             try:
                 marks = rounded(float(marks))
                 if marks >= 0 and marks <= 20:
                     s.update_marks(c, marks)
                     print(f'{s.get_name()} marks for {course} is {marks}')
                     break
-                else: print('Invalid marks!')
+                else:
+                    print('Invalid marks!')
             except ValueError:      # If input is not a number
                 print("It's not a number!")
     write_marks(course_list, student_list)
     input(f"\n--- {course}'s marks are updated! ---\nPress Enter to continue...")
+
 
 def show_marks(course_list, student_list):
     # Show marks of students for a selected course
@@ -102,9 +114,12 @@ def show_marks(course_list, student_list):
         print(f'\t. {course.get_name()}:')
         for students in student_list:
             if students.get_marks()[c] != -1:
-                print(f'\t    {students.get_name()}: {students.get_marks()[c]}')
-            else: print(f'\t    {students.get_name()}: not taken')
+                print(
+                    f'\t    {students.get_name()}: {students.get_marks()[c]}')
+            else:
+                print(f'\t    {students.get_name()}: not taken')
     input('\nPress Enter to continue...')
+
 
 def write_marks(course_list, student_list):
     # Write marks of students for a selected course to a file
@@ -113,8 +128,11 @@ def write_marks(course_list, student_list):
             file.write(f'{course.get_name()}:\n')
             for student in student_list:
                 if student.get_marks()[i] != -1:
-                    file.write(f'\t{student.get_name()}: {student.get_marks()[i]}\n')
-                else: file.write(f'\t{student.get_name()}: not taken\n')
+                    file.write(
+                        f'\t{student.get_name()}: {student.get_marks()[i]}\n')
+                else:
+                    file.write(f'\t{student.get_name()}: not taken\n')
+
 
 def calculate_gpa(course_list, student_list):
     # Calculate GPA for all students and sort students by GPA in descending order
@@ -126,18 +144,21 @@ def calculate_gpa(course_list, student_list):
             if mark != -1:
                 marks = np.append(marks, mark)
                 credits = np.append(credits, course.get_credits())
-            else: continue
+            else:
+                continue
         if credits.sum() != 0:  # If student has taken at least one course
-            student.update_gpa(rounded((marks * credits).sum() / credits.sum()))
+            student.update_gpa(
+                rounded((marks * credits).sum() / credits.sum()))
         GPA_list = np.append(GPA_list, student.get_gpa())
 
-    GPA_list = np.sort(GPA_list)[::-1]      # Sort GPA in descending order    
+    GPA_list = np.sort(GPA_list)[::-1]      # Sort GPA in descending order
     for i in GPA_list:                      # Sort students list by sorted GPA
         for student in student_list:
             if student.get_gpa() == i:
                 student_list.append(student)
                 student_list.remove(student)
                 break
+
 
 def compress_files():
     # Compress student.txt, course.txt and marks.txt to a .zip file using zipfile module
@@ -146,10 +167,12 @@ def compress_files():
         file.write('courses.txt')
         file.write('marks.txt')
 
+
 def decompress_file():
     # Decompress students.dat to students.txt and courses.txt using zipfile module
     with zipfile.ZipFile('students.dat', 'r') as file:
         file.extractall()
+
 
 def delete_file(filename):
     # Delete a file

@@ -5,6 +5,7 @@ but it is an OOP version
 #   Classes: Student, Course
 from abc import ABC, abstractmethod
 
+
 class Entity(ABC):
     ids = []    # List of used IDs
 
@@ -27,6 +28,7 @@ class Entity(ABC):
     def display_info(self):
         print(f"\t. {self.__name}\n\t    ID: '{(self.__id).lower()}'")
 
+
 class Student(Entity):
     def __init__(self):
         super().__init__()
@@ -35,6 +37,7 @@ class Student(Entity):
     def display_info(self):
         print(f'''\t. {self.get_name()}
             \r\t    ID: '{self.get_id()}'   DoB: {self.__DoB}''')
+
 
 class Course(Entity):
     def __init__(self):
@@ -53,6 +56,8 @@ class Course(Entity):
                 self.__marks[i][student_id] = marks
 
 #   Main program
+
+
 def input_quantity(str):
     # Input number of students/courses
     while True:
@@ -61,9 +66,12 @@ def input_quantity(str):
             n = int(n)
             if n > 0:
                 break
-            else: print('Invalid number!')
-        else: print('Invalid number!')
+            else:
+                print('Invalid number!')
+        else:
+            print('Invalid number!')
     return n
+
 
 def input_info(str, n):
     # Input student/course information
@@ -78,11 +86,13 @@ def input_info(str, n):
         list.append(object)
     return list
 
+
 def display_list(list):
     # Show the list of students
     for object in list:
         object.display_info()
     input('\nPress Enter to continue...')
+
 
 def find_object(list, str):
     # Find object in the list using ID
@@ -92,6 +102,7 @@ def find_object(list, str):
             if object.get_id() == id:
                 return object
         print(f'Invalid {str} ID!')
+
 
 def input_marks(course_list, student_list):
     # Input marks for student in a selected course
@@ -103,17 +114,20 @@ def input_marks(course_list, student_list):
 
     for student in student_list:
         while True:
-            marks = input(f'\nEnter marks of {course} for student {student.get_name()} (0, 20): ')
+            marks = input(
+                f'\nEnter marks of {course} for student {student.get_name()} (0, 20): ')
             try:
                 marks = float(marks)
                 if marks >= 0 and marks <= 20:
                     chosen_course.update_marks(student.get_id(), marks)
                     print(f'{student.get_name()} marks for {course} is {marks}')
                     break
-                else: print('Invalid marks!')
+                else:
+                    print('Invalid marks!')
             except ValueError:      # If input is not a number
                 print("It's not a number!")
     input('\nPress Enter to continue...')
+
 
 def show_marks(course_list, student_list):
     # Show marks of students for a selected course
@@ -123,11 +137,14 @@ def show_marks(course_list, student_list):
     marks = chosen_course.get_marks()
     for i in range(len(marks)):
         for key, value in marks[i].items():     # key = student_id, value = mark
-            student = [j.get_name() for j in student_list if j.get_id() == key][0]
+            student = [j.get_name()
+                       for j in student_list if j.get_id() == key][0]
             if value != -1:
                 print(f' {student} marks for {course} is {value}')
-            else: print(f' {student} has not taken {course}')
+            else:
+                print(f' {student} has not taken {course}')
     input('\nPress Enter to continue...')
+
 
 def main():
     studentCount = input_quantity('students')
@@ -168,6 +185,7 @@ def main():
             break
         else:
             print(f'There is no option "{opt}"')
+
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Entity(ABC):
     ids = []    # List of used IDs
 

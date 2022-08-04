@@ -1,5 +1,6 @@
 from domains.Entity import Entity
 
+
 class Student(Entity):
     def __init__(self):     # id, name, DoB, gpa
         super().__init__()

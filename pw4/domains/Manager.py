@@ -1,5 +1,6 @@
 import input as ip
 
+
 class Manager:
     def run(self):
         studentCount = ip.input_quantity('students')
@@ -13,7 +14,8 @@ class Manager:
                 i.add_course()
 
         while True:
-            ip.calculate_gpa(courses, students)     # Auto calculate GPA and sort
+            # Auto calculate GPA and sort
+            ip.calculate_gpa(courses, students)
             opt = input('''
                 \r----------------------------------------\n
                 \rChoose an option:
@@ -34,7 +36,7 @@ class Manager:
                         \rType 'y' to confirm: ''').lower()
                 if confirm == 'y':
                     ip.input_marks(courses, students)
-                else: 
+                else:
                     print('\nOperation canceled!')
             elif opt == '4':    # Show marks list
                 ip.show_marks(courses, students)
